@@ -25,17 +25,23 @@ router.get('/users/:id', (req, res) => {
 })
 
 router.post('/users', (req, res) => {
-    const user = new User({ ...req.body, status: true });
-    console.log(req.body);
-    user.save()
-        .then((result) => {
-            res.send(result)
+    User.exists({ identification: req.body.identification }, (err, doc) => {
+        if (doc) {
+            res.send('No Creado')
+        }
+    })
+    // const user = new User({ ...req.body, status: true });
+    // console.log(req.body);
+    // user.save()
+    //     .then((result) => {
+    //         res.send(result)
 
-        }).catch((err) => {
-            res.statusCode = 400
-            // res.send('Se jodio la bicicleta')
-            res.send(err)
-        });
+    //     }).catch((err) => {
+    //         res.statusCode = 400
+    //         // res.send('Se jodio la bicicleta')
+    //         res.send(err)
+    //     });
+    res.send('creado')
 })
 
 router.delete('/users/:id', (req, res) => {
